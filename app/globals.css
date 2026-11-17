@@ -5,6 +5,7 @@
   --font-heading: var(--font-sans), system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
+  --color-white: #FFFFFF;
   --color-primary: #0A192F;
   --color-primary-light: #1E293B;
   --color-primary-dark: #050C1A;
