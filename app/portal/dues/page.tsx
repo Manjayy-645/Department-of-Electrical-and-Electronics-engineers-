@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getSiteSection } from '@/lib/content/cms'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { CheckoutButton } from '@/components/CheckoutButton'
@@ -26,9 +27,10 @@ export default async function DuesPage() {
     
   if (!student) redirect('/signup')
   
-  const ACTIVE_SESSION = '2025/2026'
+  const settings = await getSiteSection('settings')
+  const ACTIVE_SESSION = settings.academicSession || '2025/2026'
   const SEMESTER = 'First'
-  const DUES_AMOUNT = 5000 // 5000 Naira
+  const DUES_AMOUNT = settings.duesAmountNumeric || 5000 // Naira
   
   // Check if already paid
   const { data: existingPayment } = await supabase

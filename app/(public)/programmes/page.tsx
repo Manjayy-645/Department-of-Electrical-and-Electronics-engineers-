@@ -8,13 +8,16 @@ import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { MetiPathwayCard } from '@/components/MetiPathwayCard'
+import { getSiteSection } from '@/lib/content/cms'
 
 export const metadata: Metadata = {
   title: 'Programmes Offered | Department of Electrical & Electronic Engineering',
   description: 'Undergraduate B.Eng. in Electrical & Electronic Engineering and Postgraduate programmes at UniPort. Explore Power Systems vs Electronics & Telecommunications options.',
 }
 
-export default function ProgrammesPage() {
+export default async function ProgrammesPage() {
+  const programmes = await getSiteSection('programmes')
+
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Banner */}
@@ -22,26 +25,24 @@ export default function ProgrammesPage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="inline-flex items-center gap-2 border border-primary/20 bg-amber-50 text-amber-900 px-3 py-1 rounded-sm text-xs font-bold tracking-wide mb-4 uppercase">
-            <ShieldCheck size={14} className="text-amber-600" /> Fully Accredited by COREN &amp; NUC
+            <ShieldCheck size={14} className="text-amber-600" /> {programmes.headerBadge}
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-primary mb-4 leading-tight">
-            Academic Programmes Offered
+            {programmes.title}
           </h1>
           <p className="text-primary/75 text-lg max-w-3xl leading-relaxed font-sans mb-8">
-            The Department of Electrical &amp; Electronic Engineering at the University of Port Harcourt provides rigorous, 
-            industry-aligned engineering education designed to equip graduates with theoretical depth, hands-on laboratory mastery, 
-            and global problem-solving capabilities.
+            {programmes.description}
           </p>
 
           <div className="flex flex-wrap gap-4 text-sm font-sans font-medium">
             <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded border border-primary/10 text-primary">
-              <Award size={16} className="text-accent" /> Degree: B.Eng (Honours)
+              <Award size={16} className="text-accent" /> Degree: {programmes.degreeType}
             </div>
             <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded border border-primary/10 text-primary">
-              <Layers size={16} className="text-accent" /> Duration: 5 Years Standard
+              <Layers size={16} className="text-accent" /> Duration: {programmes.duration}
             </div>
             <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded border border-primary/10 text-primary">
-              <Building size={16} className="text-accent" /> Department: Department of Electrical &amp; Electronic Engineering
+              <Building size={16} className="text-accent" /> Department: {programmes.departmentName}
             </div>
           </div>
         </div>
@@ -52,13 +53,12 @@ export default function ProgrammesPage() {
         {/* Core Degree Section */}
         <div className="mb-16">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <Badge variant="gold" className="mb-2 uppercase tracking-wider text-[11px]">Undergraduate Flagship</Badge>
+            <Badge variant="gold" className="mb-2 uppercase tracking-wider text-[11px]">{programmes.flagshipBadge}</Badge>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-primary mb-3">
-              Bachelor of Engineering (B.Eng.) in Electrical &amp; Electronic Engineering
+              {programmes.flagshipTitle}
             </h2>
             <p className="text-primary/70 text-sm sm:text-base font-sans leading-relaxed">
-              In the final two years of study (Years 4 and 5), students select one of two specialized professional options, 
-              tailoring their expertise to either heavy electrical power infrastructure or cutting-edge digital communications and electronic systems.
+              {programmes.flagshipDescription}
             </p>
           </div>
 
@@ -68,7 +68,7 @@ export default function ProgrammesPage() {
             {/* OPTION 1: Power Systems & Machines */}
             <Card className="p-8 border-2 border-amber-300/80 bg-white relative flex flex-col justify-between shadow-xs hover:border-amber-500 transition-colors">
               <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 font-bold font-mono text-[11px] px-3 py-1 rounded-bl-md uppercase tracking-wider">
-                Option Pathway A
+                {programmes.optionA.pathwayLabel}
               </div>
 
               <div>
@@ -77,11 +77,10 @@ export default function ProgrammesPage() {
                 </div>
 
                 <h3 className="text-2xl font-bold font-serif text-primary mb-2">
-                  Power Systems &amp; Electrical Machines Option
+                  {programmes.optionA.title}
                 </h3>
                 <p className="text-primary/75 text-sm font-sans mb-6 leading-relaxed">
-                  Focuses on the generation, high-voltage transmission, distribution, and utilization of electrical energy, 
-                  industrial electric drives, transformer architecture, switchgear protection, and modern smart renewable grids.
+                  {programmes.optionA.description}
                 </p>
 
                 {/* Key Course Modules */}
@@ -90,26 +89,12 @@ export default function ProgrammesPage() {
                     <BookOpen size={14} className="text-amber-600" /> Core Specialized Courses (400L &amp; 500L)
                   </h4>
                   <ul className="space-y-2 text-xs font-sans text-primary/85">
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 401 / 501:</strong> Power Systems Analysis, Stability &amp; Fault Calculations</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 403 / 503:</strong> Electrical Machines Design, Induction &amp; Synchronous Systems</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 505:</strong> High Voltage Engineering, Insulation &amp; Lightning Protection</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 507:</strong> Switchgear, Protective Relaying &amp; Substation Automation</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 509:</strong> Power Electronics, Inverters &amp; Renewable Energy Integration</span>
-                    </li>
+                    {programmes.optionA.courses.map((course, idx) => (
+                      <li key={idx} className="flex items-start gap-2 bg-primary/5 p-2 rounded">
+                        <CheckCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
+                        <span><strong>{course.code}:</strong> {course.title}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -119,8 +104,7 @@ export default function ProgrammesPage() {
                     <Laptop size={14} className="text-amber-600" /> Hands-on Laboratory Facilities
                   </h4>
                   <p className="text-xs text-primary/75 font-sans leading-relaxed">
-                    Electrical Machines Testing Lab (dynamometer motor testing, winding analysis), High Voltage Safety Test Bay, 
-                    and ETAP / MATLAB Power Flow Simulation Workstations.
+                    {programmes.optionA.laboratoryFacilities}
                   </p>
                 </div>
               </div>
@@ -129,7 +113,7 @@ export default function ProgrammesPage() {
               <div className="pt-6 border-t border-primary/10 mt-6">
                 <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-2">Career Trajectories:</span>
                 <div className="flex flex-wrap gap-1.5">
-                  {['TCN & Power Grid Operator', 'DISCO Distribution Engineer', 'Offshore Power Systems', 'Renewable Energy Consultant', 'Substation Design Engineer'].map((tag, i) => (
+                  {programmes.optionA.careerTrajectories.map((tag, i) => (
                     <span key={i} className="text-[11px] bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded font-medium">
                       {tag}
                     </span>
@@ -141,7 +125,7 @@ export default function ProgrammesPage() {
             {/* OPTION 2: Electronics & Telecommunications */}
             <Card className="p-8 border-2 border-blue-300/80 bg-white relative flex flex-col justify-between shadow-xs hover:border-blue-500 transition-colors">
               <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold font-mono text-[11px] px-3 py-1 rounded-bl-md uppercase tracking-wider">
-                Option Pathway B
+                {programmes.optionB.pathwayLabel}
               </div>
 
               <div>
@@ -150,11 +134,10 @@ export default function ProgrammesPage() {
                 </div>
 
                 <h3 className="text-2xl font-bold font-serif text-primary mb-2">
-                  Electronics &amp; Telecommunications Option
+                  {programmes.optionB.title}
                 </h3>
                 <p className="text-primary/75 text-sm font-sans mb-6 leading-relaxed">
-                  Focuses on modern cellular and wireless networks (4G/5G/6G), optical fiber communications, digital signal 
-                  processing (DSP), embedded microcontrollers, IoT devices, robotics, and VLSI circuit architecture.
+                  {programmes.optionB.description}
                 </p>
 
                 {/* Key Course Modules */}
@@ -163,26 +146,12 @@ export default function ProgrammesPage() {
                     <BookOpen size={14} className="text-blue-600" /> Core Specialized Courses (400L &amp; 500L)
                   </h4>
                   <ul className="space-y-2 text-xs font-sans text-primary/85">
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 402 / 502:</strong> Advanced Digital Signal Processing (DSP) &amp; Filter Design</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 404 / 504:</strong> Microwave Engineering, Waveguides &amp; Antennas</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 506:</strong> Embedded Systems, FPGA Architecture &amp; Microcontroller Interfacing</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 508:</strong> Optical Fiber Communication &amp; High-Speed Network Systems</span>
-                    </li>
-                    <li className="flex items-start gap-2 bg-primary/5 p-2 rounded">
-                      <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>EEE 510:</strong> Cellular Mobile Communications &amp; Satellite Telemetry</span>
-                    </li>
+                    {programmes.optionB.courses.map((course, idx) => (
+                      <li key={idx} className="flex items-start gap-2 bg-primary/5 p-2 rounded">
+                        <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
+                        <span><strong>{course.code}:</strong> {course.title}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -192,8 +161,7 @@ export default function ProgrammesPage() {
                     <Laptop size={14} className="text-blue-600" /> Hands-on Laboratory Facilities
                   </h4>
                   <p className="text-xs text-primary/75 font-sans leading-relaxed">
-                    Embedded Systems Lab (ESP32, ARM Cortex, STM32 development boards), RF &amp; Microwave Vector Network Analyzers, 
-                    Logic Analyzers, and Circuit CAD PCB fabrication lab.
+                    {programmes.optionB.laboratoryFacilities}
                   </p>
                 </div>
               </div>
@@ -202,7 +170,7 @@ export default function ProgrammesPage() {
               <div className="pt-6 border-t border-primary/10 mt-6">
                 <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-2">Career Trajectories:</span>
                 <div className="flex flex-wrap gap-1.5">
-                  {['Telecom Infrastructure (MTN/Airtel)', 'Embedded Firmware Engineer', 'IoT System Architect', 'RF & Antenna Specialist', 'Robotics & Automation Developer'].map((tag, i) => (
+                  {programmes.optionB.careerTrajectories.map((tag, i) => (
                     <span key={i} className="text-[11px] bg-blue-50 text-blue-900 border border-blue-200 px-2 py-0.5 rounded font-medium">
                       {tag}
                     </span>
@@ -225,60 +193,18 @@ export default function ProgrammesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="border border-primary/10 p-4 rounded-md bg-background flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold font-mono text-accent">YEAR 1 (100L)</span>
-                <h4 className="font-bold text-primary text-base mt-1 mb-2">Foundations</h4>
-                <p className="text-xs text-primary/70 leading-relaxed font-sans">
-                  Calculus, University Physics, General Chemistry, Applied Mechanics &amp; Technical Drawing.
-                </p>
+            {programmes.curriculumProgression.map((curr, idx) => (
+              <div key={idx} className="border border-primary/10 p-4 rounded-md bg-background flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-bold font-mono text-accent">YEAR {curr.yearNumber} ({curr.level})</span>
+                  <h4 className="font-bold text-primary text-base mt-1 mb-2">{curr.title}</h4>
+                  <p className="text-xs text-primary/70 leading-relaxed font-sans">
+                    {curr.description}
+                  </p>
+                </div>
+                <span className="mt-4 text-[11px] text-primary/70 font-medium">{curr.badge}</span>
               </div>
-              <span className="mt-4 text-[11px] text-primary/50 font-medium">Faculty Common</span>
-            </div>
-
-            <div className="border border-primary/10 p-4 rounded-md bg-background flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold font-mono text-accent">YEAR 2 (200L)</span>
-                <h4 className="font-bold text-primary text-base mt-1 mb-2">Core Principles</h4>
-                <p className="text-xs text-primary/70 leading-relaxed font-sans">
-                  Electric Circuit Theory I &amp; II, Basic Electronics, Thermodynamics, Engineering Workshop Practice &amp; SWEP.
-                </p>
-              </div>
-              <span className="mt-4 text-[11px] text-primary/50 font-medium">SWEP Training</span>
-            </div>
-
-            <div className="border border-primary/10 p-4 rounded-md bg-background flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold font-mono text-accent">YEAR 3 (300L)</span>
-                <h4 className="font-bold text-primary text-base mt-1 mb-2">Intermediate Dept</h4>
-                <p className="text-xs text-primary/70 leading-relaxed font-sans">
-                  Electromagnetic Field Theory, Electrical Machines I, Signals &amp; Systems, Microprocessors &amp; SIWES I.
-                </p>
-              </div>
-              <span className="mt-4 text-[11px] text-amber-700 font-semibold">SIWES I Internship</span>
-            </div>
-
-            <div className="border border-primary/10 p-4 rounded-md bg-amber-50/50 border-amber-300 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold font-mono text-amber-800">YEAR 4 (400L)</span>
-                <h4 className="font-bold text-primary text-base mt-1 mb-2">Specialization &amp; IT</h4>
-                <p className="text-xs text-primary/70 leading-relaxed font-sans">
-                  First semester coursework in chosen Option Pathway, followed by 6 months intensive Industry SIWES II.
-                </p>
-              </div>
-              <span className="mt-4 text-[11px] text-amber-800 font-bold">6-Month SIWES II</span>
-            </div>
-
-            <div className="border border-primary/10 p-4 rounded-md bg-blue-50/50 border-blue-300 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold font-mono text-blue-800">YEAR 5 (500L)</span>
-                <h4 className="font-bold text-primary text-base mt-1 mb-2">Capstone &amp; Degree</h4>
-                <p className="text-xs text-primary/70 leading-relaxed font-sans">
-                  Advanced option electives, engineering management, law &amp; economics, and Year-long B.Eng. Research Project.
-                </p>
-              </div>
-              <span className="mt-4 text-[11px] text-blue-800 font-bold">B.Eng. Capstone</span>
-            </div>
+            ))}
           </div>
         </div>
 

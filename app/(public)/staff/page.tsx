@@ -10,240 +10,8 @@ export const metadata: Metadata = {
   description: 'Academic and technical staff profile, qualifications (Ph.D., M.Eng), and specializations in the Department of Electrical & Electronic Engineering, University of Port Harcourt.',
 }
 
-interface StaffMember {
-  id: string
-  name: string
-  title: string
-  cadre: 'professor' | 'lecturer' | 'technologist'
-  categoryLabel: string
-  qualifications: string[]
-  specialization: string
-  focusArea: 'power' | 'telecom' | 'control' | 'electronics' | 'general'
-  email: string
-  office: string
-  biography?: string
-}
-
-const STAFF_DATA: StaffMember[] = [
-  // Professors & Readers
-  {
-    id: 'staff-1',
-    name: 'Engr. Prof. Emmanuel N. Ekwue',
-    title: 'Professor & Head of Department',
-    cadre: 'professor',
-    categoryLabel: 'Professor',
-    qualifications: [
-      'Ph.D. Electrical Engineering (Imperial College London, UK)',
-      'M.Eng. Power Systems (University of Port Harcourt)',
-      'B.Eng. Electrical Engineering (First Class Hons, UNN)',
-      'Fellow, Nigerian Society of Engineers (FNSE)',
-      'Registered Engineer (COREN)'
-    ],
-    specialization: 'Power Systems Reliability, Smart Grids & High Voltage Engineering',
-    focusArea: 'power',
-    email: 'emmanuel.ekwue@uniport.edu.ng',
-    office: 'HOD Office, EEE Block Rm 201',
-    biography: 'Leading researcher in transient stability and smart grid distributed generation integration with over 25 years of academic and industrial consultancy.'
-  },
-  {
-    id: 'staff-2',
-    name: 'Engr. Prof. Chibuike K. Agubor',
-    title: 'Professor of Telecommunications Engineering',
-    cadre: 'professor',
-    categoryLabel: 'Professor',
-    qualifications: [
-      'Ph.D. Telecommunications Engineering (FUTO)',
-      'M.Eng. Electronic & Telecom Engineering (UniPort)',
-      'B.Eng. Electrical/Electronic Engineering',
-      'FNSE, FIEEE, Registered Engineer (COREN)'
-    ],
-    specialization: 'Wireless Communications, MIMO Systems & 5G/6G Propagation Modeling',
-    focusArea: 'telecom',
-    email: 'chibuike.agubor@uniport.edu.ng',
-    office: 'EEE Faculty Wing Room 305',
-    biography: 'Pioneer researcher in 5G microcell propagation analysis and millimeter wave wireless channels for sub-Saharan Africa.'
-  },
-  {
-    id: 'staff-3',
-    name: 'Engr. Prof. Boniface O. Anyanwu',
-    title: 'Professor of Control & Power Systems',
-    cadre: 'professor',
-    categoryLabel: 'Professor',
-    qualifications: [
-      'Ph.D. Electrical Power Systems (University of Manchester, UK)',
-      'M.Sc. Control Systems (Imperial College London)',
-      'B.Eng. Electrical Engineering (UniPort)',
-      'FNSE, COREN Registered'
-    ],
-    specialization: 'Control Systems Design, SCADA & Renewable Energy Grid Interfacing',
-    focusArea: 'control',
-    email: 'boniface.anyanwu@uniport.edu.ng',
-    office: 'Power & Automation Lab, Rm 102',
-    biography: 'Specializes in SCADA system architectures, adaptive control algorithms for variable wind and solar energy, and grid security.'
-  },
-  {
-    id: 'staff-4',
-    name: 'Engr. Dr. (Mrs.) Florence I. Ibitoye',
-    title: 'Associate Professor & Reader',
-    cadre: 'professor',
-    categoryLabel: 'Associate Professor',
-    qualifications: [
-      'Ph.D. Electronic Engineering (UniPort)',
-      'M.Eng. Electronics & Communications (UniPort)',
-      'B.Eng. Electrical/Electronic Engineering (Benin)',
-      'MNSE, Reg. Engr. (COREN)'
-    ],
-    specialization: 'Digital Signal Processing (DSP), Biomedical Electronics & Image Recognition',
-    focusArea: 'electronics',
-    email: 'florence.ibitoye@uniport.edu.ng',
-    office: 'EEE Block Room 214',
-    biography: 'Mentoring future female engineers and spearheading grant-funded research in edge-computed biomedical diagnostic devices.'
-  },
-
-  // Senior Lecturers & Lecturers
-  {
-    id: 'staff-5',
-    name: 'Engr. Dr. Osaki E. Ogu',
-    title: 'Senior Lecturer & Departmental Exam Officer',
-    cadre: 'lecturer',
-    categoryLabel: 'Senior Lecturer',
-    qualifications: [
-      'Ph.D. Telecommunication Networks (University of Strathclyde, UK)',
-      'M.Eng. Electronic Engineering (UniPort)',
-      'B.Eng. Electrical/Electronic Engineering (UniPort)',
-      'MNSE, Reg. Engr. (COREN)'
-    ],
-    specialization: 'Optical Fiber Communications, WDM Networks & IoT Protocols',
-    focusArea: 'telecom',
-    email: 'osaki.ogu@uniport.edu.ng',
-    office: 'EEE Block Room 208',
-    biography: 'Focuses on non-linear optical transmission, high-capacity wavelength routing, and long-range IoT networks.'
-  },
-  {
-    id: 'staff-6',
-    name: 'Engr. Dr. Tari E. Alabo',
-    title: 'Senior Lecturer & Post-Graduate Coordinator',
-    cadre: 'lecturer',
-    categoryLabel: 'Senior Lecturer',
-    qualifications: [
-      'Ph.D. Power Systems Engineering (UniPort)',
-      'M.Eng. Electrical Power & Machines (UniPort)',
-      'B.Eng. Electrical Engineering (RSU)',
-      'MNSE, Reg. Engr. (COREN)'
-    ],
-    specialization: 'Substation Automation, Microgrids & Power Distribution Economics',
-    focusArea: 'power',
-    email: 'tari.alabo@uniport.edu.ng',
-    office: 'EEE Block Room 210',
-    biography: 'Extensive background in Nigerian power sector grid auditing, energy tariff modeling, and microgrid decentralized storage.'
-  },
-  {
-    id: 'staff-7',
-    name: 'Engr. Dr. Kingsley C. Nwosu',
-    title: 'Lecturer I & Departmental Staff Advisor',
-    cadre: 'lecturer',
-    categoryLabel: 'Lecturer I',
-    qualifications: [
-      'Ph.D. Electronic & Embedded Systems (Newcastle University, UK)',
-      'M.Eng. Electronics (UniPort)',
-      'B.Eng. Computer Engineering (UniPort)',
-      'MNSE, Reg. Engr. (COREN), IEEE Member'
-    ],
-    specialization: 'VLSI Design, Embedded Microcontrollers & FPGA Acceleration',
-    focusArea: 'electronics',
-    email: 'kingsley.nwosu@uniport.edu.ng',
-    office: 'Embedded Systems Lab, Rm 105',
-    biography: 'Faculty advisor to departmental student robotics and hardware development hub, with active patents in hardware cryptography.'
-  },
-  {
-    id: 'staff-8',
-    name: 'Engr. Nnamdi E. Amadi',
-    title: 'Lecturer II',
-    cadre: 'lecturer',
-    categoryLabel: 'Lecturer II',
-    qualifications: [
-      'Ph.D. candidate (Power Electronics, UniPort)',
-      'M.Eng. Electrical Power & Machines (UniPort)',
-      'B.Eng. Electrical/Electronic Engineering (First Class Hons)',
-      'MNSE, Reg. Engr. (COREN)'
-    ],
-    specialization: 'Power Electronic Converters, Inverter Drives & Electric Mobility',
-    focusArea: 'power',
-    email: 'nnamdi.amadi@uniport.edu.ng',
-    office: 'EEE Block Room 118',
-    biography: 'Investigating high-efficiency wide-bandgap (SiC/GaN) switching circuits for solar charge controllers and electric vehicle drives.'
-  },
-  {
-    id: 'staff-9',
-    name: 'Engr. (Mrs.) Blessing O. Dan-Jumbo',
-    title: 'Lecturer II',
-    cadre: 'lecturer',
-    categoryLabel: 'Lecturer II',
-    qualifications: [
-      'M.Eng. Telecommunications Engineering (UniPort)',
-      'B.Eng. Electrical/Electronic Engineering (UniPort)',
-      'MNSE, Reg. Engr. (COREN)'
-    ],
-    specialization: 'Antenna Design, RF Propagation & Satellite Links',
-    focusArea: 'telecom',
-    email: 'blessing.danjumbo@uniport.edu.ng',
-    office: 'EEE Block Room 119',
-    biography: 'Directing lab courses in electromagnetic fields, waveguide propagation, and planar antenna array synthesis.'
-  },
-
-  // Lab Technologists & Technical Officers
-  {
-    id: 'staff-10',
-    name: 'Engr. Samuel T. Briggs',
-    title: 'Chief Technical Officer (Lab Technologist)',
-    cadre: 'technologist',
-    categoryLabel: 'Chief Technologist',
-    qualifications: [
-      'M.Tech. Electrical Power Technology (RSU)',
-      'HND Electrical/Electronic Engineering (Federal Poly Nekede)',
-      'NIST Member, Full COREN Registered Engineering Technologist'
-    ],
-    specialization: 'Power Machines Laboratory, Transformer Testing & High-Voltage Safety',
-    focusArea: 'power',
-    email: 'samuel.briggs@uniport.edu.ng',
-    office: 'Electrical Machines Lab, Ground Floor',
-    biography: 'Over 20 years supervising undergraduate electrical machines, motor windings, synchronizing panels, and industrial maintenance tests.'
-  },
-  {
-    id: 'staff-11',
-    name: 'Mr. David E. Wokoma',
-    title: 'Principal Technologist',
-    cadre: 'technologist',
-    categoryLabel: 'Principal Technologist',
-    qualifications: [
-      'HND Electronics & Telecommunications (Yaba Tech)',
-      'PGD Computer Science (UniPort)',
-      'COREN Registered Engineering Technologist'
-    ],
-    specialization: 'Instrumentation, Circuit Simulation & PCB Fabrication Laboratory',
-    focusArea: 'electronics',
-    email: 'david.wokoma@uniport.edu.ng',
-    office: 'Instrumentation Lab, Room 101',
-    biography: 'Directs breadboard prototyping, oscilloscope and signal generator calibrations, and multi-layer chemical PCB etching.'
-  },
-  {
-    id: 'staff-12',
-    name: 'Engr. (Ms.) Patricia O. Okon',
-    title: 'Senior Technologist',
-    cadre: 'technologist',
-    categoryLabel: 'Senior Technologist',
-    qualifications: [
-      'B.Eng. Electrical/Electronic Engineering (UniPort)',
-      'Certified LabVIEW Associate Developer (CLAD)',
-      'COREN Registered'
-    ],
-    specialization: 'Digital Electronics, Microprocessor Interfacing & Software CAD Labs',
-    focusArea: 'electronics',
-    email: 'patricia.okon@uniport.edu.ng',
-    office: 'Digital Systems Lab, Room 103',
-    biography: 'Supervises logic analyzer stations, microcontroller dev boards (ESP32/STM32), and circuit synthesis software suites.'
-  }
-]
+import { getStaffMembers } from '@/lib/content/cms'
+import { StaffMember } from '@/lib/content/default-content'
 
 export default async function StaffPage({
   searchParams,
@@ -254,7 +22,9 @@ export default async function StaffPage({
   const cadreFilter = resolvedParams.cadre || 'all'
   const query = (resolvedParams.q || '').toLowerCase().trim()
 
-  const filteredStaff = STAFF_DATA.filter((staff) => {
+  const staffData = await getStaffMembers()
+
+  const filteredStaff = staffData.filter((staff) => {
     const matchesCadre = cadreFilter === 'all' || staff.cadre === cadreFilter
     const matchesQuery = 
       !query ||
@@ -265,9 +35,9 @@ export default async function StaffPage({
     return matchesCadre && matchesQuery
   })
 
-  const profCount = STAFF_DATA.filter(s => s.cadre === 'professor').length
-  const lecturerCount = STAFF_DATA.filter(s => s.cadre === 'lecturer').length
-  const techCount = STAFF_DATA.filter(s => s.cadre === 'technologist').length
+  const profCount = staffData.filter(s => s.cadre === 'professor').length
+  const lecturerCount = staffData.filter(s => s.cadre === 'lecturer').length
+  const techCount = staffData.filter(s => s.cadre === 'technologist').length
 
   const getAreaIcon = (area: StaffMember['focusArea']) => {
     switch(area) {
@@ -299,7 +69,7 @@ export default async function StaffPage({
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl pt-4 border-t border-primary/10">
             <div className="p-3 bg-primary/5 rounded-md border border-primary/10">
-              <span className="block text-2xl font-bold font-serif text-primary">{STAFF_DATA.length}</span>
+              <span className="block text-2xl font-bold font-serif text-primary">{staffData.length}</span>
               <span className="text-xs text-primary/70 font-medium">Total Listed Staff</span>
             </div>
             <div className="p-3 bg-amber-50 rounded-md border border-amber-200">
@@ -332,7 +102,7 @@ export default async function StaffPage({
                   : 'bg-white text-primary/80 hover:bg-primary/5 border-primary/20'
               }`}
             >
-              All Staff ({STAFF_DATA.length})
+              All Staff ({staffData.length})
             </Link>
             <Link
               href={`/staff?cadre=professor${query ? `&q=${query}` : ''}`}
@@ -392,9 +162,17 @@ export default async function StaffPage({
               <div>
                 {/* Header info */}
                 <div className="flex items-start justify-between gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-amber-50 group-hover:border-amber-300 transition-colors">
-                    {getAreaIcon(staff.focusArea)}
-                  </div>
+                  {staff.photo_url ? (
+                    <img 
+                      src={staff.photo_url} 
+                      alt={staff.name} 
+                      className="w-12 h-12 rounded-lg object-cover border border-primary/20 shrink-0 shadow-2xs"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-amber-50 group-hover:border-amber-300 transition-colors">
+                      {getAreaIcon(staff.focusArea)}
+                    </div>
+                  )}
                   <div className="text-right">
                     <Badge 
                       variant={staff.cadre === 'professor' ? 'gold' : staff.cadre === 'lecturer' ? 'electric' : 'neutral'}

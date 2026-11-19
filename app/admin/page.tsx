@@ -12,7 +12,9 @@ import {
   ShieldCheck, 
   ArrowRight,
   TrendingUp,
-  Activity
+  Activity,
+  Sparkles,
+  Award
 } from 'lucide-react'
 
 export const metadata = {
@@ -167,6 +169,37 @@ export default async function AdminDashboardPage() {
 
       </div>
       
+      {/* Content Management Highlight Banner */}
+      <div className="bg-gradient-to-r from-[#0A192F] to-[#1E3A8A] text-white p-6 sm:p-8 rounded-2xl shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="space-y-2 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-400/20 border border-amber-400/30 rounded-full text-xs font-mono font-bold text-amber-300">
+            <Sparkles size={14} />
+            <span>Content Management Suite Active</span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold font-serif">
+            Full-Spectrum Website Editorial Control
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+            Customize the Homepage Hero, active notice banners, departmental principles, degree course outlines, fees, and faculty profiles with immediate front-end revalidation.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 shrink-0">
+          <Link href="/admin/cms">
+            <Button variant="primary" size="md" className="gap-2 font-bold shadow-md shadow-blue-500/20">
+              <Sparkles size={16} />
+              <span>Open CMS Editor</span>
+            </Button>
+          </Link>
+          <Link href="/admin/staff">
+            <Button variant="secondary" size="md" className="gap-2 font-bold !border-white/30 !text-white hover:!bg-white/10">
+              <Award size={16} />
+              <span>Staff Roster</span>
+            </Button>
+          </Link>
+        </div>
+      </div>
+
       {/* Operational Module Launchpad */}
       <div>
         <div className="flex items-center gap-2 mb-4">
@@ -176,7 +209,41 @@ export default async function AdminDashboardPage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          <Link href="/admin/cms" className="group">
+            <Card variant="interactive" className="p-6 h-full flex flex-col justify-between border-blue-200 bg-blue-50/20">
+              <div className="space-y-3">
+                <div className="w-10 h-10 border border-blue-200 bg-blue-50 rounded-xs flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <Sparkles size={20} aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-base font-semibold text-primary">CMS Content Editor</h3>
+                  <p className="font-sans text-xs text-primary/65 mt-1">Live edit hero copy, alerts, mission statements, and curriculum.</p>
+                </div>
+              </div>
+              <span className="font-mono text-xs uppercase tracking-wider text-blue-600 font-semibold pt-4 block">
+                Open CMS &rarr;
+              </span>
+            </Card>
+          </Link>
+
+          <Link href="/admin/staff" className="group">
+            <Card variant="interactive" className="p-6 h-full flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 border border-primary/15 bg-primary/5 rounded-xs flex items-center justify-center text-primary group-hover:bg-accent group-hover:text-white transition-colors">
+                  <Award size={20} aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-base font-semibold text-primary">Faculty &amp; Staff Roster</h3>
+                  <p className="font-sans text-xs text-primary/65 mt-1">Manage academic professors, lecturers, and lab technologists.</p>
+                </div>
+              </div>
+              <span className="font-mono text-xs uppercase tracking-wider text-accent font-semibold pt-4 block">
+                Manage Staff &rarr;
+              </span>
+            </Card>
+          </Link>
           
           <Link href="/admin/payments" className="group">
             <Card variant="interactive" className="p-6 h-full flex flex-col justify-between">

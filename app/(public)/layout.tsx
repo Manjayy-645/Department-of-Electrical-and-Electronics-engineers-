@@ -1,12 +1,15 @@
 import { PublicNavigation } from '@/components/PublicNavigation'
 import Link from 'next/link'
 import { Mail, MapPin, ArrowUpRight, GraduationCap, ShieldCheck } from 'lucide-react'
+import { getSiteSection } from '@/lib/content/cms'
 
-export default function PublicLayout({
+export default async function PublicLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const settings = await getSiteSection('settings')
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600/20 selection:text-blue-900">
       {/* Skip to Main Content Link for WCAG Keyboard Navigation */}
@@ -43,11 +46,11 @@ export default function PublicLayout({
                 Department of Electrical &amp; Electronics Engineering
               </h2>
               <p className="text-slate-300 text-sm font-sans max-w-md leading-relaxed">
-                University of Port Harcourt. Accredited by COREN &amp; NUC. Committed to academic excellence, state-of-the-art laboratory research, sustainable energy breakthroughs, and training world-class engineers.
+                {settings.footerDescription}
               </p>
               <address className="not-italic text-xs text-slate-400 flex items-start gap-2 pt-2">
                 <MapPin size={16} className="text-amber-400 shrink-0 mt-0.5" aria-hidden="true" />
-                <span>Department of Electrical &amp; Electronics Engineering, Faculty of Engineering Complex, Choba Park, University of Port Harcourt, PMB 5323, Rivers State, Nigeria.</span>
+                <span>{settings.physicalAddress}</span>
               </address>
             </div>
 
@@ -98,7 +101,7 @@ export default function PublicLayout({
                 </li>
                 <li>
                   <Link href="/portal/dues" className="hover:text-amber-300 transition-colors inline-flex items-center gap-1 font-bold text-amber-400">
-                    Pay Departmental Dues <ArrowUpRight size={12} aria-hidden="true" />
+                    Pay Dues ({settings.duesAmount}) <ArrowUpRight size={12} aria-hidden="true" />
                   </Link>
                 </li>
               </ul>
@@ -113,8 +116,8 @@ export default function PublicLayout({
                 <p>Validate official departmental clearance receipts via the digital cryptographic validator.</p>
                 <div className="flex items-center gap-2 pt-1 text-slate-200">
                   <Mail size={14} className="text-amber-400" aria-hidden="true" />
-                  <a href="mailto:eee.dept@uniport.edu.ng" className="hover:text-amber-300 underline transition-colors">
-                    eee.dept@uniport.edu.ng
+                  <a href={`mailto:${settings.contactEmail}`} className="hover:text-amber-300 underline transition-colors">
+                    {settings.contactEmail}
                   </a>
                 </div>
                 <div className="pt-2">
@@ -137,7 +140,7 @@ export default function PublicLayout({
               &copy; {new Date().getFullYear()} Department of Electrical &amp; Electronics Engineering, UniPort. All rights reserved.
             </p>
             <p className="tracking-wide">
-              Motto: <span className="text-amber-300 font-sans italic font-bold">"Powering Innovation, Engineering the Future"</span>
+              Motto: <span className="text-amber-300 font-sans italic font-bold">&quot;{settings.motto}&quot;</span>
             </p>
           </div>
         </div>

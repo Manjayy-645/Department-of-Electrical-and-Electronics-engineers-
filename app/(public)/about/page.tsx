@@ -3,13 +3,16 @@ import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Award, Zap, Shield, BookOpen, Users, Compass, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { getSiteSection } from '@/lib/content/cms'
 
 export const metadata = {
   title: 'About the Department | Electrical & Electronics Engineering UniPort',
   description: 'Learn about the history, academic charter, laboratories, and pedagogical vision of the Department of Electrical & Electronics Engineering at the University of Port Harcourt.',
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const about = await getSiteSection('about')
+
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Header Banner */}
@@ -17,13 +20,13 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 border border-blue-200 bg-blue-50 text-blue-900 px-3.5 py-1 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
             <span className="w-2 h-2 rounded-full bg-blue-600" />
-            Faculty of Engineering &bull; University of Port Harcourt
+            {about.badge}
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-[#0A192F] mb-4 tracking-tight">
-            About the Department of Electrical &amp; Electronics Engineering
+            {about.pageTitle}
           </h1>
           <p className="text-slate-600 max-w-3xl text-lg font-sans leading-relaxed">
-            Pioneering engineering education, scientific inquiry, and technological excellence at the University of Port Harcourt. Training visionary leaders who design, build, and optimize the electrified systems of tomorrow.
+            {about.pageSubtitle}
           </p>
         </div>
       </div>
@@ -36,9 +39,9 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 border border-blue-200 shadow-2xs">
                 <Compass size={24} />
               </div>
-              <h2 className="font-bold text-xl text-[#0A192F] mb-3">Our Mission</h2>
+              <h2 className="font-bold text-xl text-[#0A192F] mb-3">{about.mission.title}</h2>
               <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                To foster academic distinction, provide rigorous practical engineering skill-building, conduct impactful scientific research, and produce industry-ready graduates capable of tackling global energy and technological challenges.
+                {about.mission.description}
               </p>
             </div>
           </Card>
@@ -48,9 +51,9 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-6 border border-amber-200 shadow-2xs">
                 <Zap size={24} />
               </div>
-              <h2 className="font-bold text-xl text-[#0A192F] mb-3">Our Vision</h2>
+              <h2 className="font-bold text-xl text-[#0A192F] mb-3">{about.vision.title}</h2>
               <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                To stand as the premier electrical and electronics engineering department in Sub-Saharan Africa, recognized internationally for innovative research, cutting-edge laboratory facilities, and entrepreneurial graduates.
+                {about.vision.description}
               </p>
             </div>
           </Card>
@@ -60,9 +63,9 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 border border-emerald-200 shadow-2xs">
                 <Shield size={24} />
               </div>
-              <h2 className="font-bold text-xl text-[#0A192F] mb-3">Core Values</h2>
+              <h2 className="font-bold text-xl text-[#0A192F] mb-3">{about.coreValues.title}</h2>
               <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                Academic Rigor, Professional Ethics, Innovation, Inclusivity, and Environmental Sustainability in strict adherence to COREN benchmarks and international IEEE accreditation standards.
+                {about.coreValues.description}
               </p>
             </div>
           </Card>
@@ -72,21 +75,15 @@ export default function AboutPage() {
         <div className="bg-white border border-slate-200/90 rounded-2xl p-8 sm:p-12 shadow-card">
           <div className="max-w-4xl space-y-6">
             <div className="inline-block border border-blue-200 bg-blue-50 text-blue-800 px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
-              Departmental Heritage &amp; Accreditation
+              {about.heritageBadge}
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0A192F]">
-              Pioneering Technological Pedagogy at UniPort
+              {about.heritageTitle}
             </h2>
             <div className="space-y-4 text-slate-600 font-sans leading-relaxed text-base font-normal">
-              <p>
-                Established as one of the cornerstone departments within the Faculty of Engineering at the University of Port Harcourt, the Department of Electrical &amp; Electronics Engineering has trained generations of engineers spearheading Nigeria&apos;s energy, telecommunications, automation, and tech ecosystems.
-              </p>
-              <p>
-                Our students participate in hands-on robotics workshops, power system simulations, circuit prototyping, hackathons, and industrial mentorship programs designed to augment university curricula with practical competence and technical confidence.
-              </p>
-              <p>
-                The curriculum is continuously benchmarked against Council for the Regulation of Engineering in Nigeria (COREN) requirements, IEEE educational guidelines, and National Universities Commission (NUC) standards.
-              </p>
+              {about.heritageParagraphs.map((para, idx) => (
+                <p key={idx}>{para}</p>
+              ))}
             </div>
 
             <div className="pt-4 flex flex-wrap gap-4">

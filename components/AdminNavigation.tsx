@@ -15,7 +15,9 @@ import {
   Menu, 
   X, 
   ShieldAlert,
-  ArrowLeft 
+  ArrowLeft,
+  Sparkles,
+  Award 
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
@@ -27,11 +29,13 @@ export function AdminNavigation() {
 
   const navLinks = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
-    { name: 'Payments', href: '/admin/payments', icon: CreditCard },
-    { name: 'Students', href: '/admin/students', icon: GraduationCap },
+    { name: 'CMS Editor', href: '/admin/cms', icon: Sparkles },
+    { name: 'Faculty Staff', href: '/admin/staff', icon: Award },
     { name: 'Activities', href: '/admin/activities', icon: Calendar },
     { name: 'Directory', href: '/admin/directory', icon: Users },
     { name: 'Documents', href: '/admin/documents', icon: FileText },
+    { name: 'Students', href: '/admin/students', icon: GraduationCap },
+    { name: 'Payments', href: '/admin/payments', icon: CreditCard },
   ]
 
   const handleSignOut = async () => {

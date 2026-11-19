@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { getAllSiteContent } from '@/lib/content/cms'
 import { 
   FileText, 
   Calendar, 
@@ -20,6 +21,8 @@ import { Badge } from '@/components/ui/Badge'
 
 export default async function HomePage() {
   const supabase = await createClient()
+  const content = await getAllSiteContent()
+  const { hero, announcement, about, settings } = content
   
   const { data: latestActivities } = await supabase
     .from('activities')
@@ -53,40 +56,40 @@ export default async function HomePage() {
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-50/90 border border-blue-200/90 rounded-full shadow-2xs">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" aria-hidden="true" />
                 <span className="font-mono text-xs uppercase tracking-wider font-bold text-blue-900">
-                  Official Departmental Portal &bull; UniPort
+                  {hero.badge}
                 </span>
               </div>
 
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold sm:font-black text-[#0A192F] leading-[1.08] tracking-tight">
-                Department of Electrical &amp; Electronics Engineering
+                {hero.title}
                 <span className="block text-blue-600 font-bold mt-2 text-2xl sm:text-4xl lg:text-5xl">
-                  University of Port Harcourt
+                  {hero.titleHighlight}
                 </span>
               </h1>
 
               <p className="font-sans text-base sm:text-lg lg:text-xl text-slate-600 max-w-2xl leading-relaxed font-normal">
-                Welcome to the digital gateway for the Department of Electrical &amp; Electronics Engineering. Pioneering technical pedagogy, world-class laboratory research, and engineering the electrified future.
+                {hero.description}
               </p>
 
               <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-                <Link href="/portal/dues">
+                <Link href={hero.primaryCtaLink || '/portal/dues'}>
                   <Button variant="primary" size="lg" className="w-full sm:w-auto gap-2.5 shadow-sm shadow-blue-600/30">
                     <Zap size={18} className="fill-current" aria-hidden="true" />
-                    <span>Pay Departmental Dues</span>
+                    <span>{hero.primaryCtaText}</span>
                     <ArrowRight size={18} aria-hidden="true" />
                   </Button>
                 </Link>
-                <Link href="/programmes">
+                <Link href={hero.secondaryCtaLink || '/programmes'}>
                   <Button variant="secondary" size="lg" className="w-full sm:w-auto gap-2">
                     <BookOpen size={18} aria-hidden="true" />
-                    <span>Programmes Offered</span>
+                    <span>{hero.secondaryCtaText}</span>
                   </Button>
                 </Link>
                 <Link 
-                  href="/staff" 
+                  href={hero.tertiaryCtaLink || '/staff'} 
                   className="inline-flex items-center justify-center text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-blue-600 p-2 transition-colors gap-1.5"
                 >
-                  <span>Staff &amp; Faculty &rarr;</span>
+                  <span>{hero.tertiaryCtaText}</span>
                 </Link>
               </div>
             </div>
@@ -99,8 +102,8 @@ export default async function HomePage() {
                     Institutional Scope
                   </span>
                   <div className="flex items-baseline gap-2 mt-1">
-                    <span className="font-black text-4xl text-[#0A192F]">7</span>
-                    <span className="text-xs font-bold text-slate-600">Accredited Engineering Disciplines</span>
+                    <span className="font-black text-4xl text-[#0A192F]">{hero.stat1Value}</span>
+                    <span className="text-xs font-bold text-slate-600">{hero.stat1Label}</span>
                   </div>
                 </div>
 
@@ -109,18 +112,18 @@ export default async function HomePage() {
                     Student Community
                   </span>
                   <div className="flex items-baseline gap-2 mt-1">
-                    <span className="font-black text-4xl text-blue-600">4,500+</span>
-                    <span className="text-xs font-bold text-slate-600">Undergraduate &amp; Postgraduates</span>
+                    <span className="font-black text-4xl text-blue-600">{hero.stat2Value}</span>
+                    <span className="text-xs font-bold text-slate-600">{hero.stat2Label}</span>
                   </div>
                 </div>
 
                 <div>
                   <span className="font-mono text-[11px] uppercase tracking-wider text-slate-500 font-bold block">
-                    Current Session Status
+                    {hero.stat3Label}
                   </span>
                   <div className="flex items-center gap-2 mt-2">
                     <CheckCircle2 size={18} className="text-emerald-600 shrink-0" aria-hidden="true" />
-                    <span className="font-sans text-xs font-bold text-slate-900">2025/2026 First Semester Active</span>
+                    <span className="font-sans text-xs font-bold text-slate-900">{hero.stat3Status}</span>
                   </div>
                 </div>
               </div>
@@ -131,28 +134,32 @@ export default async function HomePage() {
       </section>
 
       {/* High-Priority Official Announcement Strip */}
-      <section 
-        aria-label="Official Department Notice"
-        className="bg-[#0A192F] text-white py-4 border-b border-blue-900/50 shadow-xs"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <span className="p-1.5 bg-amber-500 text-slate-950 rounded-md inline-flex shrink-0 font-bold" aria-hidden="true">
-              <Megaphone size={15} />
-            </span>
-            <p className="font-sans font-medium text-slate-200">
-              <strong className="font-mono uppercase text-amber-400 mr-1.5 tracking-wider font-bold">Important Notice:</strong>
-              2025/2026 Academic Session course registration and departmental dues clearance is now mandatory for all levels.
-            </p>
+      {announcement.enabled && (
+        <section 
+          aria-label="Official Department Notice"
+          className="bg-[#0A192F] text-white py-4 border-b border-blue-900/50 shadow-xs"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-3">
+              <span className="p-1.5 bg-amber-500 text-slate-950 rounded-md inline-flex shrink-0 font-bold" aria-hidden="true">
+                <Megaphone size={15} />
+              </span>
+              <p className="font-sans font-medium text-slate-200">
+                <strong className="font-mono uppercase text-amber-400 mr-1.5 tracking-wider font-bold">{announcement.badge}</strong>
+                {announcement.message}
+              </p>
+            </div>
+            {announcement.linkText && (
+              <Link 
+                href={announcement.linkUrl || '/documents'} 
+                className="font-mono text-amber-400 hover:text-white underline uppercase tracking-wider text-[11px] font-bold whitespace-nowrap self-end sm:self-center transition-colors"
+              >
+                {announcement.linkText}
+              </Link>
+            )}
           </div>
-          <Link 
-            href="/documents" 
-            className="font-mono text-amber-400 hover:text-white underline uppercase tracking-wider text-[11px] font-bold whitespace-nowrap self-end sm:self-center transition-colors"
-          >
-            Access Academic Timetable &rarr;
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Core Engineering Pillars & Quick Access Grid */}
       <section 
@@ -168,14 +175,14 @@ export default async function HomePage() {
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-bold text-blue-700 shadow-2xs">
                 <Compass size={15} className="text-blue-600" aria-hidden="true" />
                 <span className="font-mono uppercase tracking-wider">
-                  Guiding Principles &amp; Mission
+                  {about.homeNarrativeBadge}
                 </span>
               </div>
               <h2 className="text-3xl sm:text-4xl text-[#0A192F] font-extrabold tracking-tight">
-                Engineering Rigor, Technical Ingenuity.
+                {about.homeNarrativeTitle}
               </h2>
               <p className="font-sans text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-                Founded on the Choba campus of the University of Port Harcourt, the Department of Electrical &amp; Electronics Engineering delivers accredited, world-class technical education. We prepare engineers for international industry standards in compliance with COREN, IEEE, and the Nigerian Society of Engineers (NSE).
+                {about.homeNarrativeText}
               </p>
               <div className="pt-2">
                 <Link 
@@ -249,7 +256,7 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <Button variant="primary" size="sm" className="shrink-0 gap-1.5 self-end sm:self-center font-bold">
-                    <span>Pay ₦5,000</span>
+                    <span>Pay {settings.duesAmount}</span>
                     <ArrowRight size={14} aria-hidden="true" />
                   </Button>
                 </Card>
