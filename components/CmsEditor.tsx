@@ -35,7 +35,8 @@ import {
   ExternalLink,
   Plus,
   Trash2,
-  HelpCircle
+  HelpCircle,
+  ShieldCheck
 } from 'lucide-react'
 
 interface CmsEditorProps {
@@ -184,6 +185,21 @@ export function CmsEditor({ initialContent }: CmsEditorProps) {
           <span className="font-semibold">{errorMessage}</span>
         </div>
       )}
+
+      {/* Editor Status Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-1 text-xs text-slate-500 font-sans">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
+          <span className="font-semibold text-slate-700">Live Back-Office Editorial Suite</span>
+          <span className="text-slate-300 hidden sm:inline">&bull;</span>
+          <span className="text-emerald-700 font-mono font-bold flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md text-[11px]">
+            <ShieldCheck size={13} className="text-emerald-600" /> Full Read &amp; Write Active for All Admins
+          </span>
+        </div>
+        <span className="font-mono text-[11px] text-slate-400">
+          All modifications sync live to Supabase &amp; public pages
+        </span>
+      </div>
 
       {/* Primary Navigation Tabs */}
       <div className="bg-white border border-slate-200/90 rounded-2xl p-2 shadow-xs">

@@ -15,6 +15,7 @@ import {
   Menu, 
   X, 
   ShieldAlert,
+  ShieldCheck,
   ArrowLeft,
   Sparkles,
   Award 
@@ -30,6 +31,7 @@ export function AdminNavigation() {
   const navLinks = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'CMS Editor', href: '/admin/cms', icon: Sparkles },
+    { name: 'Admin Roles', href: '/admin/roles', icon: ShieldCheck },
     { name: 'Faculty Staff', href: '/admin/staff', icon: Award },
     { name: 'Activities', href: '/admin/activities', icon: Calendar },
     { name: 'Directory', href: '/admin/directory', icon: Users },

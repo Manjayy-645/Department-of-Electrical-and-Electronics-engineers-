@@ -52,3 +52,18 @@ export async function uploadPhotoAndSavePerson(formData: FormData) {
   revalidatePath('/admin/directory')
   return { success: true }
 }
+
+export async function deletePerson(id: string) {
+  try {
+    const supabase = createAdminClient()
+    const { error } = await supabase.from('people').delete().eq('id', id)
+    if (error) {
+      return { error: error.message }
+    }
+    revalidatePath('/admin/directory')
+    revalidatePath('/directory')
+    return { success: true }
+  } catch (err: any) {
+    return { error: err.message || 'Failed to delete directory entry' }
+  }
+}

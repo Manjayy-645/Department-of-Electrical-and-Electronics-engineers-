@@ -48,7 +48,6 @@ export async function signUpAndCreateStudent(
     })
 
   if (insertError) {
-    // Check if unique constraint error
     if (insertError.message.includes('students_mat_no_key')) {
       return { error: 'Matriculation number already exists.' }
     }
@@ -64,7 +63,7 @@ export async function signUpAndCreateStudent(
 export async function loginWithPassword(email: string, password: string) {
   const supabase = await createClient()
   
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
@@ -73,7 +72,30 @@ export async function loginWithPassword(email: string, password: string) {
     return { error: error.message }
   }
 
-  return { success: true }
+  // Determine redirection target (Admins -> /admin, Students -> /portal)
+  let redirectTo = '/portal'
+  if (data?.user) {
+    const userRole = String(data.user.user_metadata?.role || data.user.app_metadata?.role || '').toLowerCase()
+    const isKnownAdmin = ['admin', 'super_admin', 'editor', 'technical_director', 'pro', 'staff', 'hod'].some(
+      r => userRole.includes(r)
+    )
+
+    if (isKnownAdmin || data.user.app_metadata?.claims_admin) {
+      redirectTo = '/admin'
+    } else {
+      const { data: adminRow } = await supabase
+        .from('admin_roles')
+        .select('user_id')
+        .eq('user_id', data.user.id)
+        .maybeSingle()
+
+      if (adminRow) {
+        redirectTo = '/admin'
+      }
+    }
+  }
+
+  return { success: true, redirectTo }
 }
 
 /**

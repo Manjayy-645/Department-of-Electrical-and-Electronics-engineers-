@@ -1,7 +1,7 @@
 import { getAllSiteContent } from '@/lib/content/cms'
 import { CmsEditor } from '@/components/CmsEditor'
 import Link from 'next/link'
-import { Sparkles, Globe, ArrowRight, ShieldCheck } from 'lucide-react'
+import { Sparkles, Globe, ArrowRight, ShieldCheck, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 
 export const dynamic = 'force-dynamic'
@@ -43,10 +43,34 @@ export default async function AdminCmsPage() {
             <span>View Live Site</span>
             <ArrowRight size={12} />
           </Link>
-          <Badge variant="success" className="px-3 py-1 font-mono text-xs">
-            Auto-Revalidation On
+          <Link
+            href="/admin/roles"
+            className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-primary hover:text-accent font-bold px-3 py-1.5 rounded-lg border border-primary/20 bg-white hover:bg-slate-50 transition-colors shadow-2xs"
+          >
+            <ShieldCheck size={14} />
+            <span>Admin Roles</span>
+          </Link>
+          <Badge variant="success" className="px-3 py-1 font-mono text-xs flex items-center gap-1.5">
+            <ShieldCheck size={12} />
+            <span>Read &amp; Write Active</span>
           </Badge>
         </div>
+      </div>
+
+      {/* Permissions Assurance Strip */}
+      <div className="bg-emerald-50/70 border border-emerald-300/80 rounded-xl p-3.5 px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-emerald-900 shadow-2xs">
+        <div className="flex items-center gap-2.5">
+          <ShieldCheck size={16} className="text-emerald-700 shrink-0" />
+          <span className="font-semibold">
+            Universal Editorial Privilege: Every administrator (Technical Director, PRO, Content Editor, and Back-Office staff) has full read and write power to edit and publish live changes across all sections.
+          </span>
+        </div>
+        <Link 
+          href="/admin/roles" 
+          className="font-mono text-[11px] uppercase font-bold text-emerald-800 hover:text-emerald-950 underline whitespace-nowrap"
+        >
+          View Admin Roster &rarr;
+        </Link>
       </div>
 
       {/* Main CMS Editor */}

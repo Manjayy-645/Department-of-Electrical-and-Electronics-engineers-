@@ -1,0 +1,66 @@
+[
+  {
+    "id": "admin-td",
+    "userId": "00000000-0000-0000-0000-000000000001",
+    "role": "technical_director",
+    "email": "tech.director@uniport.edu.ng",
+    "fullName": "Technical Director",
+    "permissions": [
+      "read",
+      "write",
+      "cms_edit",
+      "staff_edit",
+      "audit"
+    ],
+    "canEditCms": true,
+    "createdAt": "2026-11-23T10:17:29.722Z"
+  },
+  {
+    "id": "admin-pro",
+    "userId": "00000000-0000-0000-0000-000000000002",
+    "role": "pro",
+    "email": "pro.eee@uniport.edu.ng",
+    "fullName": "Public Relations Officer (PRO)",
+    "permissions": [
+      "read",
+      "write",
+      "cms_edit",
+      "staff_edit",
+      "audit"
+    ],
+    "canEditCms": true,
+    "createdAt": "2026-11-23T10:17:29.724Z"
+  },
+  {
+    "id": "admin-editor",
+    "userId": "00000000-0000-0000-0000-000000000003",
+    "role": "editor",
+    "email": "cms.editor@uniport.edu.ng",
+    "fullName": "Editorial & Content Manager",
+    "permissions": [
+      "read",
+      "write",
+      "cms_edit",
+      "staff_edit",
+      "audit"
+    ],
+    "canEditCms": true,
+    "createdAt": "2026-11-23T10:17:29.724Z"
+  },
+  {
+    "id": "admin-general",
+    "userId": "00000000-0000-0000-0000-000000000004",
+    "role": "admin",
+    "email": "department.admin@uniport.edu.ng",
+    "fullName": "Departmental Administrator",
+    "permissions": [
+      "read",
+      "write",
+      "cms_edit",
+      "staff_edit",
+      "audit"
+    ],
+    "canEditCms": true,
+    "createdAt": "2026-11-23T10:17:29.724Z"
+  }
+]

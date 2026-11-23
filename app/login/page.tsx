@@ -4,12 +4,10 @@ import { useState } from 'react'
 import { loginWithPassword } from '@/app/auth/actions'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowLeft, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
-import { Badge } from '@/components/ui/Badge'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -42,7 +40,8 @@ export default function LoginPage() {
       return
     }
     
-    router.push('/portal')
+    // Redirect to admin for administrators or portal for students
+    router.push(res.redirectTo || '/portal')
   }
 
   return (
@@ -73,7 +72,7 @@ export default function LoginPage() {
 
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0A192F] tracking-tight">
-            Student Portal Sign In
+            Portal &amp; Back-Office Sign In
           </h1>
           <p className="font-sans text-xs sm:text-sm text-slate-500 mt-1 font-medium">
             Department of Electrical &amp; Electronics Engineering &bull; UniPort
@@ -96,18 +95,18 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-5" noValidate>
             <Input
-              label="Student Email Address"
+              label="Email Address (Student or Administrator)"
               type="email"
               id="student-email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="e.g. yourname@uniport.edu.ng"
+              placeholder="e.g. name@uniport.edu.ng"
               autoComplete="email"
               required
             />
 
             <Input
-              label="Portal Password"
+              label="Account Password"
               type="password"
               id="student-password"
               value={password}

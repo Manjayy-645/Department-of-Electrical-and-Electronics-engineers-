@@ -53,3 +53,18 @@ export async function uploadDocumentAndSave(formData: FormData) {
   revalidatePath('/admin/documents')
   return { success: true }
 }
+
+export async function deleteDocument(id: string) {
+  try {
+    const supabase = createAdminClient()
+    const { error } = await supabase.from('documents').delete().eq('id', id)
+    if (error) {
+      return { error: error.message }
+    }
+    revalidatePath('/admin/documents')
+    revalidatePath('/documents')
+    return { success: true }
+  } catch (err: any) {
+    return { error: err.message || 'Failed to delete document' }
+  }
+}

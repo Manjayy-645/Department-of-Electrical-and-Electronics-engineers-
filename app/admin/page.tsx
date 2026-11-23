@@ -1,4 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAllAdmins } from '@/lib/content/cms'
 import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -30,12 +31,14 @@ export default async function AdminDashboardPage() {
     { count: studentCount },
     { data: successfulPayments },
     { count: documentCount },
-    { count: activityCount }
+    { count: activityCount },
+    admins
   ] = await Promise.all([
     supabase.from('students').select('*', { count: 'exact', head: true }),
     supabase.from('payments').select('amount').eq('status', 'success'),
     supabase.from('documents').select('*', { count: 'exact', head: true }).eq('is_active', true),
-    supabase.from('activities').select('*', { count: 'exact', head: true })
+    supabase.from('activities').select('*', { count: 'exact', head: true }),
+    getAllAdmins()
   ])
   
   const totalDues = successfulPayments?.reduce((sum, p) => sum + Number(p.amount), 0) || 0
@@ -57,13 +60,14 @@ export default async function AdminDashboardPage() {
             Admin Back-Office Overview
           </h1>
           <p className="font-sans text-xs sm:text-sm text-primary/70 mt-1">
-            Real-time telemetry on dues collections, clearance validations, and departmental archives.
+            Real-time telemetry on dues collections, clearance validations, CMS editorial suite, and departmental archives.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge variant="success" className="px-3 py-1 font-mono text-xs">
-            System Live & Online
+          <Badge variant="success" className="px-3 py-1 font-mono text-xs flex items-center gap-1.5">
+            <ShieldCheck size={12} />
+            <span>Read &amp; Write CMS Power Active</span>
           </Badge>
         </div>
       </div>
@@ -123,22 +127,22 @@ export default async function AdminDashboardPage() {
           <div>
             <div className="flex justify-between items-start mb-4">
               <span className="font-mono text-[10px] font-semibold text-primary/60 uppercase tracking-widest">
-                Active Circulars
+                Authorized Admins
               </span>
               <div className="p-2 bg-primary/5 text-primary rounded-2xs border border-primary/10">
-                <FileText size={16} aria-hidden="true" />
+                <ShieldCheck size={16} aria-hidden="true" />
               </div>
             </div>
             <p className="font-serif text-3xl sm:text-4xl font-bold text-primary">
-              {documentCount || 0}
+              {admins.length}
             </p>
-            <span className="font-sans text-xs text-primary/60 mt-1 block">
-              Published PDFs & memos
+            <span className="font-sans text-xs text-emerald-700 font-semibold mt-1 block">
+              All with Read &amp; Write CMS power
             </span>
           </div>
           <div className="pt-4 border-t border-primary/10 mt-4">
-            <Link href="/admin/documents" className="font-mono text-xs uppercase font-bold text-accent hover:underline flex items-center gap-1">
-              <span>Manage Docs &rarr;</span>
+            <Link href="/admin/roles" className="font-mono text-xs uppercase font-bold text-accent hover:underline flex items-center gap-1">
+              <span>Manage Roles &rarr;</span>
             </Link>
           </div>
         </Card>
@@ -174,13 +178,13 @@ export default async function AdminDashboardPage() {
         <div className="space-y-2 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-400/20 border border-amber-400/30 rounded-full text-xs font-mono font-bold text-amber-300">
             <Sparkles size={14} />
-            <span>Content Management Suite Active</span>
+            <span>Universal CMS Editorial Suite Active</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold font-serif">
             Full-Spectrum Website Editorial Control
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-            Customize the Homepage Hero, active notice banners, departmental principles, degree course outlines, fees, and faculty profiles with immediate front-end revalidation.
+            Every administrator on the back-office possesses full <strong>read and write power</strong> to customize Homepage banners, active alert strips, departmental principles, curriculum pathways, and faculty profiles with immediate live revalidation.
           </p>
         </div>
 
@@ -191,10 +195,10 @@ export default async function AdminDashboardPage() {
               <span>Open CMS Editor</span>
             </Button>
           </Link>
-          <Link href="/admin/staff">
+          <Link href="/admin/roles">
             <Button variant="secondary" size="md" className="gap-2 font-bold !border-white/30 !text-white hover:!bg-white/10">
-              <Award size={16} />
-              <span>Staff Roster</span>
+              <ShieldCheck size={16} />
+              <span>Admin Roles</span>
             </Button>
           </Link>
         </div>
@@ -219,11 +223,28 @@ export default async function AdminDashboardPage() {
                 </div>
                 <div>
                   <h3 className="font-serif text-base font-semibold text-primary">CMS Content Editor</h3>
-                  <p className="font-sans text-xs text-primary/65 mt-1">Live edit hero copy, alerts, mission statements, and curriculum.</p>
+                  <p className="font-sans text-xs text-primary/65 mt-1">Live edit hero copy, alerts, mission statements, and curriculum with full read &amp; write privileges.</p>
                 </div>
               </div>
               <span className="font-mono text-xs uppercase tracking-wider text-blue-600 font-semibold pt-4 block">
                 Open CMS &rarr;
+              </span>
+            </Card>
+          </Link>
+
+          <Link href="/admin/roles" className="group">
+            <Card variant="interactive" className="p-6 h-full flex flex-col justify-between border-amber-200 bg-amber-50/15">
+              <div className="space-y-3">
+                <div className="w-10 h-10 border border-amber-200 bg-amber-50 rounded-xs flex items-center justify-center text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                  <ShieldCheck size={20} aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-base font-semibold text-primary">Admin Roles &amp; Permissions</h3>
+                  <p className="font-sans text-xs text-primary/65 mt-1">Manage all back-office administrators and confirm full read &amp; write rights.</p>
+                </div>
+              </div>
+              <span className="font-mono text-xs uppercase tracking-wider text-amber-700 font-semibold pt-4 block">
+                Manage Admins &rarr;
               </span>
             </Card>
           </Link>
@@ -275,23 +296,6 @@ export default async function AdminDashboardPage() {
               </div>
               <span className="font-mono text-xs uppercase tracking-wider text-accent font-semibold pt-4 block">
                 View Roster &rarr;
-              </span>
-            </Card>
-          </Link>
-
-          <Link href="/admin/directory" className="group">
-            <Card variant="interactive" className="p-6 h-full flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 border border-primary/15 bg-primary/5 rounded-xs flex items-center justify-center text-primary group-hover:bg-accent group-hover:text-white transition-colors">
-                  <Users size={20} aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="font-serif text-base font-semibold text-primary">Faculty Directory</h3>
-                  <p className="font-sans text-xs text-primary/65 mt-1">Add or update Deans, HODs, and student executives.</p>
-                </div>
-              </div>
-              <span className="font-mono text-xs uppercase tracking-wider text-accent font-semibold pt-4 block">
-                Manage Directory &rarr;
               </span>
             </Card>
           </Link>

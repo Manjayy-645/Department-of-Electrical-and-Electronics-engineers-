@@ -54,10 +54,17 @@ export async function middleware(request: NextRequest) {
   const isPortal = pathname.startsWith('/portal')
   const isAdmin = pathname.startsWith('/admin')
 
-  // Not logged in -> redirect to login (placeholder /login)
+  // Not logged in -> redirect to login
   if (!user && (isPortal || isAdmin)) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
+
+  // Detect admin status from multiple sources
+  const userMetaRole = String(user?.user_metadata?.role || user?.app_metadata?.role || '').toLowerCase()
+  const isKnownAdminRole = ['admin', 'super_admin', 'editor', 'technical_director', 'pro', 'staff', 'hod'].some(
+    r => userMetaRole.includes(r)
+  )
+  const isClaimsAdmin = Boolean(user?.app_metadata?.claims_admin)
 
   if (user && isPortal) {
     // Check if student profile exists
@@ -65,22 +72,42 @@ export async function middleware(request: NextRequest) {
       .from('students')
       .select('id')
       .eq('id', user.id)
-      .single()
+      .maybeSingle()
 
     if (!student) {
-      // Since student creation is now tied to signup, if it's missing, something is wrong.
+      // If the user is an admin accessing portal, redirect them directly to admin back-office
+      if (isKnownAdminRole || isClaimsAdmin) {
+        return NextResponse.redirect(new URL('/admin', request.url))
+      }
+
+      // Check admin_roles table
+      const { data: adminRow } = await supabase
+        .from('admin_roles')
+        .select('user_id')
+        .eq('user_id', user.id)
+        .maybeSingle()
+
+      if (adminRow) {
+        return NextResponse.redirect(new URL('/admin', request.url))
+      }
+
+      // Otherwise regular unregistered user, redirect to signup
       return NextResponse.redirect(new URL('/signup', request.url))
     }
-    
   }
 
   if (user && isAdmin) {
-    // Check if admin
+    // Any user with admin metadata or claims_admin has full access
+    if (isKnownAdminRole || isClaimsAdmin) {
+      return response
+    }
+
+    // Check if user has an active admin role in the admin_roles table (any role is permitted)
     const { data: admin } = await supabase
       .from('admin_roles')
-      .select('user_id')
+      .select('user_id, role')
       .eq('user_id', user.id)
-      .single()
+      .maybeSingle()
 
     if (!admin) {
       return NextResponse.redirect(new URL('/', request.url))
